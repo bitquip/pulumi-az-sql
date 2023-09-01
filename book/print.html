@@ -1,0 +1,551 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title></title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = null;
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">2.</strong> Getting Started</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="getting-started/prerequisites.html"><strong aria-hidden="true">2.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="getting-started/configuration.html"><strong aria-hidden="true">2.2.</strong> Configuration</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">3.</strong> Defining Resources</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="defining-resources/modules.html"><strong aria-hidden="true">3.1.</strong> Importing Modules</a></li><li class="chapter-item expanded "><a href="defining-resources/configurations.html"><strong aria-hidden="true">3.2.</strong> Define Configuration Objects</a></li><li class="chapter-item expanded "><a href="defining-resources/resource-group.html"><strong aria-hidden="true">3.3.</strong> Define Resource Group</a></li><li class="chapter-item expanded "><a href="defining-resources/sql-server.html"><strong aria-hidden="true">3.4.</strong> Define SQL Server</a></li><li class="chapter-item expanded "><a href="defining-resources/sql-database.html"><strong aria-hidden="true">3.5.</strong> Define SQL Database</a></li></ol></li><li class="chapter-item expanded "><div><strong aria-hidden="true">4.</strong> Deploying Resources</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="deploying-conclusion/up.html"><strong aria-hidden="true">4.1.</strong> Deploying Resources</a></li><li class="chapter-item expanded "><a href="deploying-conclusion/cleanup.html"><strong aria-hidden="true">4.2.</strong> Cleaning Up</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion.html"><strong aria-hidden="true">5.</strong> Conclusion</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="azure-sql-database-with-pulumi"><a class="header" href="#azure-sql-database-with-pulumi">Azure SQL Database with Pulumi</a></h1>
+<p><img src="https://static.wikia.nocookie.net/simpsons/images/f/f5/250px-Nibbler.png/" alt="Lord Nibbler" /></p>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p><strong>This tutorial will walk you through the process of creating an Azure SQL Database using Pulumi.</strong></p>
+<p>Every software engineer at Vizient should strive to be a full-stack engineer. This means that you should be able to create and manage your own infrastructure, as well as your own application code.</p>
+<p>The goal of this tutorial is to help you get started with creating and managing your own infrastructure.</p>
+<p>To achieve this goal, we will be using Pulumi to create an Azure SQL Database following standard Vizient practices.</p>
+<p>We will be using the following tools:</p>
+<ul>
+<li><a href="https://www.pulumi.com/">Pulumi</a></li>
+<li><a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a></li>
+<li><a href="https://azure.microsoft.com/en-us/services/sql-database/">Azure SQL Database</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-servers">Azure SQL Database Server</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure">Azure SQL Database Firewall</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-firewall-configure#configure-a-server-level-firewall-rule-using-the-azure-portal">Azure SQL Database Firewall Rule</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/sql-database/sql-database-connect-query-dotnet-core">Azure SQL Database Connection String</a></li>
+</ul>
+<p>Links have been provided for each tool, but you will not need to read the documentation for each tool to complete this tutorial.</p>
+<p>At Vizient, the Cloud Operations team provides Vizient-flavored Pulumi modules that you can use to create and manage your infrastructure.</p>
+<h2 id="vizient-flavored-pulumi"><a class="header" href="#vizient-flavored-pulumi">Vizient-flavored Pulumi</a></h2>
+<p>The Cloud Operations team has created documentation to help you get started with Pulumi.</p>
+<p>Vizient-flavored Pulumi modules are modules that have been created by the Cloud Operations team by wrapping the modules with custom functionality to achieve necessary prerequisite resources, best align resource creation with security standards, as well as other desirable outcomes.</p>
+<p>The documentation includes how to install Pulumi, how to create a Pulumi project, and how to deploy your Pulumi project.</p>
+<p>You can find this documentation on Confluence <a href="https://vizientinc.atlassian.net/wiki/spaces/CO/pages/131072512/Pulumi+Getting+Started">here</a>.</p>
+<p>Other pertinent documentation can be found on Confluence by utilizing the search bar at the top.</p>
+<p>For this tutorial, we will start fresh and add the necessary resources to create an Azure SQL Database.</p>
+<p>We will go through these prerequisite resources somewhat quickly, in order to focus on the Azure SQL Database. (???)</p>
+<p>In order to avoid potential conflicts with existing resources being used in live environments among other considerations, we will be creating resources in Vizient's learning environment (ALS - Azure Learning Subscription).</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="section-1-prerequisites"><a class="header" href="#section-1-prerequisites">Section 1: Prerequisites</a></h2>
+<p><strong>Before you start, there are a few things you need to have in place:</strong></p>
+<div class="table-wrapper"><table><thead><tr><th>Requirement</th><th>Description</th></tr></thead><tbody>
+<tr><td>Pulumi CLI</td><td>Pulumi is an infrastructure-as-code tool that allows you to define and manage cloud resources using code. Install the Pulumi CLI by following the instructions in the <a href="https://www.pulumi.com/docs/get-started/install/">Pulumi documentation</a>.</td></tr>
+<tr><td>Azure Account</td><td>You'll need an Azure account with an active subscription. If you don't have one, you can sign up for a free Azure account at <a href="https://azure.com/free">https://azure.com/free</a>.</td></tr>
+<tr><td>Node.js</td><td>Pulumi uses Node.js to run your program. Install Node.js by downloading it from the official website: <a href="https://nodejs.org/">https://nodejs.org/</a>.</td></tr>
+<tr><td>Code Editor</td><td>You'll need a code editor to work with your Pulumi project. We recommend using Visual Studio Code, but you can choose any editor you're comfortable with.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="section-2-set-up-pulumi-project"><a class="header" href="#section-2-set-up-pulumi-project">Section 2: Set Up Pulumi Project</a></h2>
+<p>Now, let's get your Pulumi project up and running:</p>
+<ol>
+<li><strong>Create a New Project Directory:</strong> </li>
+</ol>
+<p>Open your terminal and navigate to the directory where you want to create the project. Run the following commands:</p>
+<pre><code class="language-bash">mkdir pulumi-azure-sql
+cd pulumi-azure-sql
+</code></pre>
+<ol start="2">
+<li><strong>Initialize Pulumi Project:</strong> </li>
+</ol>
+<p>Initialize a new Pulumi Typescript project using the following command:</p>
+<pre><code class="language-bash">pulumi new typescript
+</code></pre>
+<p>This command will guide you through the project setup process. Provide a suitable project name, stack name, and select TypeScript as the language.</p>
+<ol start="3">
+<li><strong>Open the Project in Your Code Editor:</strong></li>
+</ol>
+<p>Once the initialization is complete, open the project in your code editor. You'll see various files and folders that Pulumi has set up for you.</p>
+<pre><code class="language-bash">my-pulumi-project/
+├── Pulumi.yaml
+├── index.ts
+├── package.json
+└── tsconfig.json
+</code></pre>
+<p><em><strong>Tip</strong></em>: If you're using VS Code, you can open the project in VS Code by running the following command in your terminal:</p>
+<pre><code class="language-bash">code .
+</code></pre>
+<ol start="4">
+<li><strong>Install Dependencies:</strong></li>
+</ol>
+<p>In order to use the various Azure resources in your Pulumi project, you'll need to install the dependencies listed in the <code>package.json</code> file that was generated by <strong>Pulumi</strong>.</p>
+<p>Many of you are likely familiar with <strong>npm</strong> and to run <code>npm install</code> to install the dependencies. If not, you can read more about npm <a href="https://docs.npmjs.com/about-npm/">here</a>.</p>
+<p>However, there is an alternative to npm called <a href="https://pnpm.js.org/en/">pnpm</a>. </p>
+<p><strong>Pnpm</strong> is a fast, disk space efficient package manager that uses a single disk space for all versions of a package. 
+It also has a few other advantages over npm, which you can read about <a href="https://pnpm.js.org/en/motivation">here</a>.</p>
+<p>This presents us with a choice: we can either use npm or pnpm to install the dependencies.</p>
+<p>If not obvious, a discussion with your team should happen first, but the reality is that most teams use npm, for now, but should switch to <strong>pnpm</strong> as it is not a heavy lift in most cases. </p>
+<p><strong>pnpm</strong> is recommended, but the choice is for you and your team to make.</p>
+<p>If you choose to use <strong>pnpm</strong>, you can install it by running the following command:</p>
+<pre><code class="language-bash">npm install -g pnpm
+</code></pre>
+<p>If you run into permission issues, there are a *<strong>few</strong> alternatives:</p>
+<p>First, open a new <code>Powershell</code> window as <em><strong>Administrator</strong></em> and try running the stand-alone script install command:</p>
+<pre><code class="language-bash">iwr https://get.pnpm.io/install.ps1 -useb | iex
+</code></pre>
+<p>If that doesn't work, you can install it via Chocolatey:</p>
+<pre><code class="language-bash">choco install pnpm
+</code></pre>
+<p>If you are unfamiliar with Chocolatey, you can read more about it <a href="https://chocolatey.org/">here</a>.</p>
+<p>Once you have <strong>pnpm</strong> installed, you can install the dependencies by running the following command:</p>
+<pre><code class="language-bash">pnpm install
+</code></pre>
+<p>Of course, if you choose to use <strong>npm</strong>, you can install the dependencies by running the following command:</p>
+<pre><code class="language-bash">npm install
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="section-3-define-azure-sql-database-resources"><a class="header" href="#section-3-define-azure-sql-database-resources">Section 3: Define Azure SQL Database Resources</a></h1>
+<p>In this section, we'll define the resources needed to create an Azure SQL Database and its dependencies using Pulumi and TypeScript.</p>
+<ol>
+<li>
+<p><strong>Import Necessary Modules:</strong> </p>
+<p>Open the <code>index.ts</code> file in the <code>azure-ts</code> directory. At the top of the file, you'll need to import the required Pulumi and Azure modules:</p>
+</li>
+</ol>
+<pre><code class="language-typescript">import * as vznAzNative from '@vizientinc/pulumi-azure-native';
+import { ResourceGroupVzn } from '@vizientinc/pulumi-azure-native/lib/resources/ResourceGroupVzn';
+import { authorization } from '@pulumi/azure-native';
+import {Naming as VizNaming, sql} from '@vizientinc/pulumi-azure-native';
+</code></pre>
+<p><em><strong>ATTENTION:</strong></em> </p>
+<p><em>Notice we are importing the Vizient Pulumi Azure module. This module is a wrapper around the official Pulumi Azure module.</em></p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="define-resources-for-configuration"><a class="header" href="#define-resources-for-configuration">Define Resources for Configuration</a></h1>
+<p>Next, we'll define some resources to hold configuration values.
+These configuration values are common to all resources and will be referenced throughout the project.</p>
+<p><em><strong>Resource Tags</strong></em></p>
+<pre><code class="language-typescript">const tags = {
+    env: 'sandbox',
+    app: 'azure-sql',
+    servicetier: 't1',
+    owneremail: 'your_email@your_domain.com'
+};
+</code></pre>
+<div class="table-wrapper"><table><thead><tr><th>Tag</th><th>Description</th></tr></thead><tbody>
+<tr><td>env</td><td>The environment in which the resource is being created. This is typically one of the following values: <br> <strong>sandbox, dev, sandbox01, dev01, nonprod, preprod, prod, prod01</strong>.</td></tr>
+<tr><td>app</td><td>The name of the application the resource is being created for. This is typically a string.</td></tr>
+<tr><td>servicetier</td><td>The service tier of the resource. This is typically one of the following values: t1, t2, t3, t4.</td></tr>
+<tr><td>owneremail</td><td>The email address of the resource owner. This is typically a string.</td></tr>
+</tbody></table>
+</div>
+<p>Tags provide a way to associate metadata with Azure resources, such as virtual machines, storage accounts, databases, and more. </p>
+<p>These tags consist of name-value pairs and are particularly useful for organizing, categorizing, and managing resources within an Azure environment/subscription.</p>
+<p>When creating resources at Vizient, we use a standard set of tags to help us organize and manage our resources. These tags are defined in the <code>tags</code> object above.</p>
+<p><em><strong>Infrastructure Configuration</strong></em></p>
+<pre><code class="language-typescript">const infraConfigs = {
+    subscriptionId: 'your_subscription_id'
+    aseId: &quot;&quot;,
+    instance: '01',
+    region: 'eastus2',
+};
+</code></pre>
+<p>While the <code>tags</code> object is used to reference necessary values common to all resources, the <code>infraConfigs</code> object is used to reference values specific to the infrastructure configurations.</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td>subscriptionId</td><td>The ID of the Azure subscription in which the resource is being created. This is typically a GUID.</td></tr>
+<tr><td>aseId</td><td>The ID of the Azure App Service Environment in which the resource is being created. This is typically a GUID.</td></tr>
+<tr><td>instance</td><td>The instance of the resource being created. This is typically a number.</td></tr>
+<tr><td>region</td><td>The Azure region in which the resource is being created. This is typically a string.</td></tr>
+</tbody></table>
+</div>
+<p><em><strong>Role Configuration</strong></em></p>
+<pre><code class="language-typescript">interface RoleConfigs {
+    devRoleGroupId: vznpulumi.pulumi.Input&lt;string&gt;;
+    devRoleGroupName: string;
+    t1RoleGroupId: vznpulumi.pulumi.Input&lt;string&gt;;
+    t1RoleGroupName: string;
+    apiDbRoles: Array&lt;string&gt;;
+}
+</code></pre>
+<p>The <code>RoleConfigs</code> interface is used to define the role configurations. These configurations are used to manage access to the resources within the resource group.</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td>devRoleGroupId</td><td>The ID of the Azure Active Directory group that will be used to manage the resource group. This is typically a GUID.</td></tr>
+<tr><td>devRoleGroupName</td><td>The name of the Azure Active Directory group that will be used to manage the resource group. This is typically a string.</td></tr>
+<tr><td>t1RoleGroupId</td><td>The ID of the Azure Active Directory group that will be used to manage the resource group. This is typically a GUID.</td></tr>
+<tr><td>t1RoleGroupName</td><td>The name of the Azure Active Directory group that will be used to manage the resource group. This is typically a string.</td></tr>
+<tr><td>apiDbRoles</td><td>The roles that will be assigned to the Azure Active Directory group that will be used to manage the resource group. This is typically an array of strings.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="define-a-resource-group"><a class="header" href="#define-a-resource-group">Define a Resource Group</a></h1>
+<p>Start by defining a resource group to hold your Azure resources:</p>
+<pre><code class="language-typescript">new ResourceGroupVzn(`rg-eastus2-01`, {
+        appName: tags.app,
+        environment: tags.env,
+        serviceTier: tags.servicetier,
+        owner: vznAzNative.azuread.getUser({
+            userPrincipalName: tags.owneremail,
+        }),
+        region: infraConfigs.region,
+        instance: infraConfigs.instance,
+        subscriptionId: infraConfigs.subscriptionId,
+        devAADGroupName: roleConfigs.t1RoleGroupName,
+    }).resourceGroup;
+</code></pre>
+<p>The <code>ResourceGroup</code> resource represents a logical container for your resources within Azure. It helps you manage your resources as a group and apply policies to them as a group.</p>
+<p>In this code, we are creating a resource group named <code>rg-eastus2-01</code> in the <code>eastus2</code> region. We are also associating the resource group with the <code>azure-sql</code> application, the <code>sandbox</code> environment, and the <code>t1</code> service tier.</p>
+<p>The <code>ResourceGroup</code> resource also allows you to apply policies to the resources within the group. In this code, we are associating the resource group with the <code>t1</code> role group. This role group is used to manage access to the resources within the resource group.</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Explanation</th></tr></thead><tbody>
+<tr><td><code>appName</code></td><td>The name of the application associated with the resource group. This helps identify the purpose of the resources grouped together within this Azure Resource Group.</td></tr>
+<tr><td><code>environment</code></td><td>The environment associated with the resource group, such as 'development', 'production', 'sandbox', etc. This categorizes resources based on their intended usage environment.</td></tr>
+<tr><td><code>serviceTier</code></td><td>The service tier or level of the application associated with the resource group. It indicates the performance, features, and capabilities of the application within this group.</td></tr>
+<tr><td><code>owner</code></td><td>The owner of the resource group, typically represented by their email address. This identifies the person or team responsible for managing and maintaining the resources within the group.</td></tr>
+<tr><td><code>region</code></td><td>The Azure region where the resource group is located. This specifies the geographical location of the data center hosting the resources within this group.</td></tr>
+<tr><td><code>instance</code></td><td>The instance identifier or name associated with the resource group. It's often used to distinguish between different instances of the same application or resources, such as '01' for the first instance.</td></tr>
+<tr><td><code>subscriptionId</code></td><td>The ID of the Azure subscription to which the resource group belongs. This indicates the specific subscription under which the resources in this group are billed and managed.</td></tr>
+<tr><td><code>devAADGroupName</code></td><td>The name of the Azure Active Directory group associated with development access and roles. This group might have permissions to manage resources in a development environment.</td></tr>
+</tbody></table>
+</div>
+<p><em><strong>Attention:</strong></em>
+Typically you would define related resources within their own file and reference them in the main index.ts file. 
+However, for the sake of simplicity, we'll define all of our resources directly in the index.ts file.</p>
+<p>This will allow us to focus on the specific resource we're creating.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="define-sql-server"><a class="header" href="#define-sql-server">Define SQL Server</a></h1>
+<p><strong>Now, let's define an Azure SQL Server:</strong></p>
+<pre><code class="language-typescript">const sqlServer = new sql.ServerVzn(
+  'sqlServer',
+  {
+    appInfo: {
+      region: location,
+      resourceGroupName: resourceGroup.name,
+      serviceTier: serviceTier,
+      tags: tags,
+    },
+    resourceName: VizNaming.SqlServer(app, env, location, instance),
+    allowAllAzureTraffic: false,
+    allowedVizientLocations: [
+      LocationCode.cap,
+      LocationCode.ae2,
+    ],
+    allowedSubnetIDs: vnetIDsSql2Allow,
+    subscriptionId: subscriptionId,
+    tenantId: tenantId,
+  },
+  {
+    protect: false,
+  }
+);
+</code></pre>
+<p>In this code, we are creating an Azure SQL Server named <code>sqlServer</code> in the <code>eastus2</code> region. </p>
+<p>We are also associating the SQL Server with the <code>azure-sql</code> application, the <code>sandbox</code> environment, and the <code>t1</code> service tier.</p>
+<p>The <code>Server</code> resource allows you to define the following properties:</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td>appInfo</td><td>The application information associated with the SQL Server. This is typically an object containing the application name, environment, service tier, and tags.</td></tr>
+<tr><td>resourceName</td><td>The name of the SQL Server. This is typically a string. The <code>VizNaming.SqlServer</code> method is used to generate the name of the SQL Server.</td></tr>
+<tr><td>allowAllAzureTraffic</td><td>A boolean value indicating whether or not to allow all Azure traffic to the SQL Server. This is typically a boolean value.</td></tr>
+<tr><td>allowedVizientLocations</td><td>An array of Azure locations that are allowed to access the SQL Server. This is typically an array of strings.</td></tr>
+<tr><td>allowedSubnetIDs</td><td>An array of Azure subnet IDs that are allowed to access the SQL Server. This is typically an array of strings.</td></tr>
+<tr><td>subscriptionId</td><td>The ID of the Azure subscription in which the SQL Server is being created. This is typically a GUID.</td></tr>
+<tr><td>tenantId</td><td>The ID of the Azure Active Directory tenant in which the SQL Server is being created. This is typically a GUID.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h1 id="define-sql-database"><a class="header" href="#define-sql-database">Define SQL Database</a></h1>
+<p><strong>Next, define an Azure SQL Database within the SQL Server:</strong></p>
+<pre><code class="language-typescript"> new sql.DatabaseVzn(
+  'sqlDatabase',
+  {
+    createAADGroupsInSandbox: true,
+    resourceName: 'sqldatabase',
+    server: sqlServer.sqlServer, // notice we are using the sqlServer object created above
+    databaseSku: {
+      name: daasDbDTU,
+    },
+    maxSizeInGiB: 100,
+    appInfo: {
+      region: location,
+      resourceGroupName: resourceGroup.name,
+      tags: tags,
+      serviceTier: serviceTier,
+    },
+  },
+  {
+    parent: sqlServer.sqlServer,
+    dependsOn: sqlServer.sqlServer,
+  }
+);
+</code></pre>
+<p>In this code, we are creating an Azure SQL Database named <code>sqlDatabase</code> in the <code>eastus2</code> region. We are also associating the SQL Database with the <code>azure-sql</code> application, the <code>sandbox</code> environment, and the <code>t1</code> service tier.</p>
+<p>The <code>Database</code> resource allows you to define the following properties:</p>
+<div class="table-wrapper"><table><thead><tr><th>Field</th><th>Description</th></tr></thead><tbody>
+<tr><td>createAADGroupsInSandbox</td><td>A boolean value indicating whether or not to create Azure Active Directory groups in the sandbox environment. This is typically a boolean value.</td></tr>
+<tr><td>resourceName</td><td>The name of the SQL Database. This is typically a string.</td></tr>
+<tr><td>server</td><td>The SQL Server in which the SQL Database is being created. This is typically a SQL Server object. Notice that we are using the <code>sqlServer</code> object created above.</td></tr>
+<tr><td>databaseSku</td><td>The SKU of the SQL Database. This is typically an object containing the name of the SKU. The <code>daasDbDTU</code> variable is used to define the name of the SKU.</td></tr>
+<tr><td>maxSizeInGiB</td><td>The maximum size of the SQL Database in gigabytes. This is typically a number.</td></tr>
+<tr><td>appInfo</td><td>The application information associated with the SQL Database. This is typically an object containing the application name, environment, service tier, and tags.</td></tr>
+</tbody></table>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="section-4-deploy-the-resources"><a class="header" href="#section-4-deploy-the-resources">Section 4: Deploy the Resources</a></h2>
+<p><em><strong>With the resources defined, it's time to deploy them:</strong></em></p>
+<ol>
+<li>
+<p><strong>Deploy:</strong> </p>
+<p>Save the changes you made to the <code>index.ts</code> file.</p>
+<p>Before we run the command to actually deploy the resources, let's take a look at some of the commands frequently used with Pulumi before we deploy the resources:</p>
+<p><em><strong>pulumi stack select</strong></em></p>
+<pre><code class="language-bash">pulumi stack select
+</code></pre>
+<p>If you have multiple stacks, you can use this command to select the stack you want to deploy to. </p>
+<p><em><strong>pulumi refresh</strong></em></p>
+<pre><code class="language-bash">pulumi refresh
+</code></pre>
+<p>This command will refresh the current state of the stack. This should be run after changes are made to the stack outside of Pulumi. For example, if you were to manually delete a resource in Azure, you would need to run this command to update the state of the stack.</p>
+<p>It should run automatically when performing a <code>pulumi up</code> but it's good to know how to run it manually.</p>
+<p><em><strong>pulumi preview</strong></em></p>
+<pre><code class="language-bash">pulumi preview
+</code></pre>
+<p>This command will show you a preview of the changes that will be made to your stack. This is useful if you want to see what changes will be made before you deploy them. </p>
+<p><em><strong>Deploying</strong></em></p>
+<p>In your terminal, navigate to the root of your project directory and run the following command:</p>
+<pre><code class="language-bash">pulumi up
+</code></pre>
+<p>Pulumi will analyze your code, create a deployment plan, and prompt you to confirm the changes before proceeding.</p>
+</li>
+<li>
+<p><strong>Review and Confirm:</strong></p>
+</li>
+</ol>
+<p>After reviewing the proposed changes, type <code>yes</code> to confirm and initiate the deployment.</p>
+<ol start="3">
+<li><strong>Observe Outputs:</strong></li>
+</ol>
+<p>Once the deployment is complete, Pulumi will display outputs, including connection strings for the SQL Server and Database. These outputs are crucial for connecting to your newly created resources.</p>
+<div style="break-before: page; page-break-before: always;"></div><h2 id="section-5-clean-up-resources"><a class="header" href="#section-5-clean-up-resources">Section 5: Clean Up Resources</a></h2>
+<ol>
+<li><strong>Destroy Resources:</strong></li>
+</ol>
+<p>If you want to remove the resources you've created, run the following command:</p>
+<pre><code class="language-bash">pulumi destroy
+</code></pre>
+<ol start="2">
+<li><strong>Confirm Deletion:</strong></li>
+</ol>
+<p>Confirm the resource deletion when prompted. This will remove the resources created in your Azure subscription.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h1>
+<p><a href="url"><img src="https://i.kym-cdn.com/entries/icons/original/000/039/563/8675309.jpg" height="auto" style="border-radius:8%"></a></p>
+<p><em><strong>Congratulations!</strong></em> </p>
+<p>You've successfully created an Azure SQL Database and its dependencies using Pulumi and TypeScript. 
+You've learned how to set up a Pulumi project, define Azure resources, deploy them, and clean up afterward. </p>
+<p>This approach empowers you to manage cloud infrastructure using code, providing reproducibility and maintainability.</p>
+<p>Feel free to explore further with Pulumi and Azure, and adapt this foundation to your specific infrastructure needs.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </div>
+    </body>
+</html>

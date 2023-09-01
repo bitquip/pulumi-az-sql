@@ -1,0 +1,16 @@
+# Summary
+
+- [Introduction](introduction.md)
+- [Getting Started]()
+  - [Installation](getting-started/prerequisites.md)
+  - [Configuration](getting-started/configuration.md)
+- [Defining Resources]()
+  - [Importing Modules](defining-resources/modules.md)
+  - [Define Configuration Objects](defining-resources/configurations.md)
+  - [Define Resource Group](defining-resources/resource-group.md)
+  - [Define SQL Server](defining-resources/sql-server.md)
+  - [Define SQL Database](defining-resources/sql-database.md)
+- [Deploying Resources]()
+  - [Deploying Resources](deploying-conclusion/up.md)
+  - [Cleaning Up](deploying-conclusion/cleanup.md)
+- [Conclusion](conclusion.md)

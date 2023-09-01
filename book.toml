@@ -1,0 +1,5 @@
+[book]
+authors = ["Hunter Hartline"]
+language = "en"
+multilingual = false
+src = "src"
